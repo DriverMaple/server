@@ -5,5 +5,14 @@
     <select id="selectUserByAccAndPw" resultType="com.maple.guideserver.entity.User">
         select * from `user` where account = #{account} and password = #{password};
     </select>
+    <insert id="insertUser">
+        INSERT INTO `user` (nick_name,account,password) VALUES (#{account},#{account},#{password});
+    </insert>
+    <update id="updateUserPlace">
+        UPDATE user SET longitude = #{longitude}, latitude = #{latitude} WHERE user_id = #{user_id};
+    </update>
+    <select id="selectUserByAcc" resultType="com.maple.guideserver.entity.User">
+        select * from `user` WHERE account = #{account};
+    </select>
 
 </mapper>

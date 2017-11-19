@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.maple.guideserver.dao.TeamDao">
+    <insert id="insertTeam" useGeneratedKeys="true" parameterType="com.maple.guideserver.entity.Team"
+            keyProperty="team_id">
+        INSERT INTO team (team_name,team_pw,user_id) VALUES (#{team_name},#{team_pw},#{user_id});
+    </insert>
+    <delete id="deleteTeam">
+        DELETE FROM team WHERE team_id = #{team_id};
+        DELETE FROM user_team WHERE team_id = #{team_id};
+    </delete>
+    <select id="selectTeamById" resultType="com.maple.guideserver.entity.Team">
+        SELECT * FROM team WHERE team_id = #{team_id};
+    </select>
+    <select id="selectTeamByCondition" resultType="com.maple.guideserver.entity.Team">
+        SELECT * FROM team
+        <where>
+            <if test="team_name != null and team_name != ''">
+                team_name = #{team_name}
+            </if>
+            <if test="team_pw != null and team_pw != ''">
+                and team_pw = #{team_pw}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addMember">
+        INSERT INTO user_team (user_id,team_id,user_role) VALUES (#{user_id},#{team_id},#{user_role});
+    </insert>
+
+    <delete id="exitTeam">
+        DELETE FROM user_team WHERE user_id = #{user_id} AND team_id = #{team_id};
+    </delete>
+</mapper>
