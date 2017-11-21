@@ -5,10 +5,20 @@ public class User {
     private String nick_name;
     private String account;
     private String password;
-    private Double longitude;
-    private Double latitude;
+    private Double longitude;//经度
+    private Double latitude;//纬度
     private String head_jpg;
     private String motto;
+
+    private Integer user_role;//1导游，2游客
+
+    public Integer getUser_role() {
+        return user_role;
+    }
+
+    public void setUser_role(Integer user_role) {
+        this.user_role = user_role;
+    }
 
     public Integer getUser_id() {
         return user_id;
