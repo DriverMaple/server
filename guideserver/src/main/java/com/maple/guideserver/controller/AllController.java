@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 public class AllController {
     @Autowired
@@ -248,6 +250,110 @@ public class AllController {
             }
             Integer team_id = Integer.parseInt(param.getTeam_id());
             teamDao.deleteTeam(team_id);
+            result.setResult(Result.SUCCESS);
+            return result;
+        } catch (Exception e){
+            result.setResult(Result.FAIL);
+            result.setMessage(e.toString());
+            return result;
+        }
+    }
+
+    /**
+     * 获取所在队伍
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "getTeam",method = RequestMethod.POST)
+    @ResponseBody
+    public Result getTeam(@RequestBody ActType param){
+        Result result = new Result();
+        try {
+            if (param.getUser_id() == null || param.getUser_id().equals("")){
+                result.setResult(Result.FAIL);
+                return  result;
+            }
+            Integer user_id = Integer.parseInt(param.getUser_id());
+            Team team = teamDao.selectTeamByUser(user_id);
+            result.setValue(team);
+            result.setResult(Result.SUCCESS);
+            return result;
+        } catch (Exception e){
+            result.setResult(Result.FAIL);
+            result.setMessage(e.toString());
+            return result;
+        }
+    }
+
+    /**
+     * 获取导游信息
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "getGuide",method = RequestMethod.POST)
+    @ResponseBody
+    public Result getGuide(@RequestBody ActType param){
+        Result result = new Result();
+        try {
+            if (param.getTeam_id() == null || param.getTeam_id().equals("")){
+                result.setResult(Result.FAIL);
+                return  result;
+            }
+            Integer team_id = Integer.parseInt(param.getTeam_id());
+            User guide = userDao.selectGuide(team_id);
+            result.setValue(guide);
+            result.setResult(Result.SUCCESS);
+            return result;
+        } catch (Exception e){
+            result.setResult(Result.FAIL);
+            result.setMessage(e.toString());
+            return result;
+        }
+    }
+
+    /**
+     * 获取团队成员信息
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "getTeammate",method = RequestMethod.POST)
+    @ResponseBody
+    public Result getTeammate(@RequestBody ActType param){
+        Result result = new Result();
+        try {
+            if (param.getTeam_id() == null || param.getTeam_id().equals("")){
+                result.setResult(Result.FAIL);
+                return  result;
+            }
+            Integer team_id = Integer.parseInt(param.getTeam_id());
+            List<User> mates = userDao.selectAllTeammate(team_id);
+            result.setValue(mates);
+            result.setResult(Result.SUCCESS);
+            return result;
+        } catch (Exception e){
+            result.setResult(Result.FAIL);
+            result.setMessage(e.toString());
+            return result;
+        }
+    }
+
+    /**
+     * 获取游客信息
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "getTourise",method = RequestMethod.POST)
+    @ResponseBody
+    public Result getTourise(@RequestBody ActType param){
+        Result result = new Result();
+        try {
+            if (param.getTeam_id() == null || param.getTeam_id().equals("")){
+                result.setResult(Result.FAIL);
+                return  result;
+            }
+            Integer team_id = Integer.parseInt(param.getTeam_id());
+            List<User> mates = userDao.selectTourise(team_id);
+            result.setValue(mates);
             result.setResult(Result.SUCCESS);
             return result;
         } catch (Exception e){

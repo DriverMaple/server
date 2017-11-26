@@ -32,4 +32,8 @@
     <delete id="exitTeam">
         DELETE FROM user_team WHERE user_id = #{user_id} AND team_id = #{team_id};
     </delete>
+
+    <select id="selectTeamByUser" resultType="com.maple.guideserver.entity.Team">
+        SELECT t.*,u3.account guider_phone FROM team t JOIN user_team u ON t.team_id = u.team_id JOIN user_team u2 ON t.team_id = u2.team_id and u2.user_role = 1 join `user` u3 on u3.user_id = u2.user_id WHERE u.user_id = #{user_id};
+    </select>
 </mapper>
