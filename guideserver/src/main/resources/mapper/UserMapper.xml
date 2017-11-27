@@ -15,4 +15,16 @@
         select * from `user` WHERE account = #{account};
     </select>
 
+    <select id="selectAllTeammate" resultType="com.maple.guideserver.entity.User">
+        SELECT u.*,t.user_role FROM user_team t join `user` u ON  u.user_id = t.user_id WHERE t.team_id = #{team_id};
+    </select>
+
+    <select id="selectGuide" resultType="com.maple.guideserver.entity.User">
+        SELECT u.*,t.user_role FROM user_team t join `user` u ON  u.user_id = t.user_id WHERE t.team_id = #{team_id} and user_role = 1;
+    </select>
+
+    <select id="selectTourise" resultType="com.maple.guideserver.entity.User">
+        SELECT u.*,t.user_role FROM user_team t join `user` u ON  u.user_id = t.user_id WHERE t.team_id = #{team_id} and user_role = 2;
+    </select>
+
 </mapper>

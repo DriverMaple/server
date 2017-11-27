@@ -20,4 +20,6 @@ public interface TeamDao {
     void addMember(@Param("user_id") Integer user_id,@Param("team_id") Integer team_id,@Param("user_role") Integer user_role);
 
     void exitTeam(@Param("user_id") Integer user_id,@Param("team_id") Integer team_id);
+
+    Team selectTeamByUser(@Param("user_id") Integer user_id);
 }
